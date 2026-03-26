@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TEMP</title>
+    
+</head>
+<body style="white-space: pre-line">
+    <input type="text">
+    
+    <span></span>
+    <script defer>
+        // API endpoint: https://api.dictionaryapi.dev/api/v2/entries/en/<word>
+
+async function dictionary(word) {
+  try {
+    const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+    const data = await response.json();
+    document.querySelector('span').innerHTML = template(data);
+  } catch (error) {
+    console.error('Error fetching fact:', error);
+  }
+}
+
+function template(apiResponse) {
+    const data = apiResponse[0];
+    let output = `Word: ${data.word}\n`;
+    output += `Phonetic: <i>${data.phonetic || 'N/A'}</i>\n\n`;
+    data.meanings.forEach((meaning) => {
+        output += `<b>${meaning.partOfSpeech.toUpperCase()}</b>\n<ol>`;
+        meaning.definitions.forEach((def, index) => {
+            output += `<li>${def.definition}\n</li>`;
+            if (def.example) {
+                output += `<ul><li><u>Ex: "${def.example}"</u></li></ul>\n`;
+            }
+        });
+        output += `</ol>\n`;
+    });
+    return output;
+}
+
+document.querySelector('input').addEventListener('keyup', () => {
+    if (!document.querySelector('input').value) document.querySelector('span').innerHTML = '';
+    if (document.querySelector('input').value.split(' ').length > 1) return
+    dictionary(document.querySelector('input').value);
+});
+    </script>
+</body>
+</html>
