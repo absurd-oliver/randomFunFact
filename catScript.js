@@ -26,7 +26,9 @@ function displayFact(obj){
 window.addEventListener('DOMContentLoaded', getCat);
 
 const footer = document.querySelector('footer');
+const button = document.querySelector('button');
 footer.addEventListener('click', () => {  window.location.reload(); });
+button.addEventListener('click', () => {  window.location = './index.html'; });
 
 
 
