@@ -23,7 +23,7 @@ function displayFact(obj){
 window.addEventListener('DOMContentLoaded', getUselessFact);
 
 const footer = document.querySelector('footer');
-footer.addEventListener('click', () => {  window.location.refresh; });
+footer.addEventListener('click', () => {  window.location.reload(); });
 
 
 
